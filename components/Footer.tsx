@@ -69,6 +69,11 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; 2024 Supplement Store. All rights reserved.</p>
+          <p className="mt-2">
+            <Link href="/provider/orders" className="text-muted-foreground hover:text-primary underline">
+              Provider Portal
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

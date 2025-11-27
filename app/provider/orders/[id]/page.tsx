@@ -1,8 +1,6 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -35,16 +33,12 @@ export default function OrderDetailPage() {
 
   if (!order) {
     return (
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1 container py-12 text-center">
-          <h1 className="text-2xl font-bold">Order not found</h1>
-          <Button className="mt-4" onClick={() => router.push("/provider/orders")}>
-            Back to Orders
-          </Button>
-        </main>
-        <Footer />
-      </div>
+      <main className="flex-1 container py-12 text-center">
+        <h1 className="text-2xl font-bold">Order not found</h1>
+        <Button className="mt-4" onClick={() => router.push("/provider/orders")}>
+          Back to Orders
+        </Button>
+      </main>
     )
   }
 
@@ -76,9 +70,7 @@ export default function OrderDetailPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1 container py-12">
+    <main className="flex-1 container py-12">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-4xl font-bold">Order Details</h1>
           <Button variant="outline" onClick={() => router.push("/provider/orders")}>
@@ -240,8 +232,6 @@ export default function OrderDetailPage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
   )
 }
 

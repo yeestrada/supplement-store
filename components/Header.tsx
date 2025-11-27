@@ -27,12 +27,6 @@ export function Header() {
           >
             Products
           </Link>
-          <Link
-            href="/provider/orders"
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            Provider Portal
-          </Link>
           <Link href="/cart">
             <Button variant="outline" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />

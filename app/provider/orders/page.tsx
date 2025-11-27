@@ -1,8 +1,6 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -111,9 +109,7 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1 container py-12">
+    <main className="flex-1 container py-12">
         <h1 className="mb-8 text-4xl font-bold">All Orders</h1>
 
         <Card className="mb-8">
@@ -251,8 +247,6 @@ export default function OrdersPage() {
           </div>
         )}
       </main>
-      <Footer />
-    </div>
   )
 }
 
