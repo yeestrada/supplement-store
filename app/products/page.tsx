@@ -78,7 +78,10 @@ export default function ProductsPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 container py-8">
-        <h1 className="mb-8 text-4xl font-bold">All Products</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">All Products</h1>
+          <p className="text-muted-foreground">Browse our complete selection of supplements</p>
+        </div>
 
         <div className="mb-8 grid gap-4 md:grid-cols-4">
           <div className="md:col-span-2">
@@ -139,34 +142,43 @@ export default function ProductsPage() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredAndSortedProducts.map((product) => (
-            <Card key={product.id} className="flex flex-col overflow-hidden">
-              <div className="relative aspect-square w-full">
+            <Card 
+              key={product.id} 
+              className="flex flex-col overflow-hidden group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20"
+            >
+              <div className="relative aspect-square w-full overflow-hidden bg-muted">
                 <ProductImage
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-cover"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {product.isBestSeller && (
-                  <div className="absolute top-2 right-2 rounded bg-primary px-2 py-1 text-xs font-semibold text-primary-foreground">
-                    Best Seller
+                  <div className="absolute top-3 right-3 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground shadow-lg animate-pulse">
+                    ⭐ Best Seller
                   </div>
                 )}
               </div>
-              <CardHeader>
-                <CardTitle className="line-clamp-2">{product.name}</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors">
+                  {product.name}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1">
-                <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">
+              <CardContent className="flex-1 pb-4">
+                <p className="mb-4 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
                   {product.description}
                 </p>
-                <p className="text-2xl font-bold text-primary">
-                  ${product.price.toFixed(2)}
-                </p>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-3xl font-bold text-primary">
+                    ${product.price.toFixed(2)}
+                  </p>
+                </div>
               </CardContent>
-              <CardFooter className="mt-auto">
+              <CardFooter className="mt-auto pt-0">
                 <Link href={`/products/${product.id}`} className="w-full">
-                  <Button className="w-full">View Details</Button>
+                  <Button className="w-full group-hover:bg-primary/90 transition-all">
+                    View Details
+                  </Button>
                 </Link>
               </CardFooter>
             </Card>

@@ -110,9 +110,12 @@ export default function OrdersPage() {
 
   return (
     <main className="flex-1 container py-12">
-        <h1 className="mb-8 text-4xl font-bold">All Orders</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">All Orders</h1>
+          <p className="text-muted-foreground">Manage and track all customer orders</p>
+        </div>
 
-        <Card className="mb-8">
+        <Card className="mb-8 shadow-md">
           <CardContent className="p-6">
             <div className="grid gap-4 md:grid-cols-4">
               <div className="md:col-span-2">
@@ -123,6 +126,7 @@ export default function OrdersPage() {
                     setSearchQuery(e.target.value)
                     setCurrentPage(1)
                   }}
+                  className="h-11"
                 />
               </div>
               <Select
@@ -132,7 +136,7 @@ export default function OrdersPage() {
                   setCurrentPage(1)
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -153,6 +157,7 @@ export default function OrdersPage() {
                     setDateFrom(e.target.value)
                     setCurrentPage(1)
                   }}
+                  className="h-11"
                 />
                 <Input
                   type="date"
@@ -162,85 +167,96 @@ export default function OrdersPage() {
                     setDateTo(e.target.value)
                     setCurrentPage(1)
                   }}
+                  className="h-11"
                 />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-md overflow-hidden">
           <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Products</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedOrders.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center">
-                      No orders found
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead className="font-semibold">ID</TableHead>
+                    <TableHead className="font-semibold">Customer</TableHead>
+                    <TableHead className="font-semibold">Products</TableHead>
+                    <TableHead className="font-semibold">Total</TableHead>
+                    <TableHead className="font-semibold">Date</TableHead>
+                    <TableHead className="font-semibold">Status</TableHead>
+                    <TableHead className="font-semibold">Actions</TableHead>
                   </TableRow>
-                ) : (
-                  paginatedOrders.map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell className="font-medium">{order.id}</TableCell>
-                      <TableCell>{order.customerName}</TableCell>
-                      <TableCell>
-                        {order.items.length} product(s)
-                      </TableCell>
-                      <TableCell>${order.total.toFixed(2)}</TableCell>
-                      <TableCell>
-                        {new Date(order.createdAt).toLocaleDateString("en-US")}
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className={`rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(order.status)}`}
-                        >
-                          {getStatusLabel(order.status)}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/provider/orders/${order.id}`}>
-                          <Button variant="outline" size="sm">
-                            View Details
-                          </Button>
-                        </Link>
+                </TableHeader>
+                <TableBody>
+                  {paginatedOrders.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center py-12">
+                        <p className="text-muted-foreground">No orders found</p>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+                  ) : (
+                    paginatedOrders.map((order) => (
+                      <TableRow key={order.id} className="hover:bg-muted/30 transition-colors">
+                        <TableCell className="font-medium font-mono text-sm">{order.id}</TableCell>
+                        <TableCell className="font-medium">{order.customerName}</TableCell>
+                        <TableCell>
+                          <span className="text-sm text-muted-foreground">
+                            {order.items.length} product(s)
+                          </span>
+                        </TableCell>
+                        <TableCell className="font-semibold text-primary">
+                          ${order.total.toFixed(2)}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {new Date(order.createdAt).toLocaleDateString("en-US")}
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${getStatusColor(order.status)}`}
+                          >
+                            {getStatusLabel(order.status)}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/provider/orders/${order.id}`}>
+                            <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground transition-all">
+                              View Details
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
 
         {totalPages > 1 && (
-          <div className="mt-8 flex items-center justify-center gap-2">
+          <div className="mt-8 flex items-center justify-center gap-4">
             <Button
               variant="outline"
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
+              className="hover:bg-primary hover:text-primary-foreground transition-all"
             >
               Previous
             </Button>
-            <span className="text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
+              <span className="text-sm font-medium">
+                Page <span className="font-bold text-primary">{currentPage}</span> of {totalPages}
+              </span>
+            </div>
             <Button
               variant="outline"
               onClick={() =>
                 setCurrentPage((p) => Math.min(totalPages, p + 1))
               }
               disabled={currentPage === totalPages}
+              className="hover:bg-primary hover:text-primary-foreground transition-all"
             >
               Next
             </Button>

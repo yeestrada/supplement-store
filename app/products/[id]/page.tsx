@@ -41,7 +41,7 @@ export default function ProductDetailPage() {
       <Header />
       <main className="flex-1 container py-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div className="relative aspect-square w-full overflow-hidden rounded-lg">
+          <div className="relative aspect-square w-full overflow-hidden rounded-xl shadow-2xl border-2 border-border">
             <ProductImage
               src={product.image}
               alt={product.name}
@@ -49,29 +49,33 @@ export default function ProductDetailPage() {
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center">
-            <div className="mb-4">
+          <div className="flex flex-col justify-center space-y-6">
+            <div>
               {product.isBestSeller && (
-                <span className="inline-block rounded bg-primary px-3 py-1 text-sm font-semibold text-primary-foreground">
-                  Best Seller
+                <span className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-lg mb-4">
+                  ⭐ Best Seller
                 </span>
               )}
             </div>
-            <h1 className="mb-4 text-4xl font-bold">{product.name}</h1>
-            <p className="mb-4 text-lg text-muted-foreground">
+            <h1 className="text-5xl font-bold leading-tight">{product.name}</h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">
               {product.description}
             </p>
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-primary">
+            <div className="flex items-baseline gap-3 py-4 border-y">
+              <span className="text-5xl font-bold text-primary">
                 ${product.price.toFixed(2)}
               </span>
             </div>
-            <div className="mb-6">
+            <div className="space-y-2">
               <p className="text-sm text-muted-foreground">
-                <strong>Category:</strong> {product.category}
+                <strong className="text-foreground">Category:</strong> {product.category}
               </p>
             </div>
-            <Button size="lg" onClick={handleAddToCart} className="w-full md:w-auto">
+            <Button 
+              size="lg" 
+              onClick={handleAddToCart} 
+              className="w-full md:w-auto text-lg h-12 px-8 hover:scale-105 transition-transform"
+            >
               Add to Cart
             </Button>
           </div>

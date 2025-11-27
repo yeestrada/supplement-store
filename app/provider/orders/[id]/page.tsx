@@ -72,27 +72,30 @@ export default function OrderDetailPage() {
   return (
     <main className="flex-1 container py-12">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-4xl font-bold">Order Details</h1>
-          <Button variant="outline" onClick={() => router.push("/provider/orders")}>
-            Back to Orders
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Order Details</h1>
+            <p className="text-muted-foreground">Order ID: <span className="font-mono font-semibold">{order.id}</span></p>
+          </div>
+          <Button variant="outline" onClick={() => router.push("/provider/orders")} className="hover:bg-primary hover:text-primary-foreground transition-all">
+            ← Back to Orders
           </Button>
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+            <Card className="shadow-md">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl">Order Summary</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">
                       Order ID
                     </p>
-                    <p className="text-lg font-semibold">{order.id}</p>
+                    <p className="text-lg font-semibold font-mono">{order.id}</p>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">
                       Date
                     </p>
@@ -100,12 +103,12 @@ export default function OrderDetailPage() {
                       {new Date(order.createdAt).toLocaleString("en-US")}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1 col-span-2">
+                    <p className="text-sm font-medium text-muted-foreground mb-2">
                       Status
                     </p>
                     <span
-                      className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${getStatusColor(order.status)}`}
+                      className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold shadow-sm ${getStatusColor(order.status)}`}
                     >
                       {getStatusLabel(order.status)}
                     </span>
@@ -114,54 +117,56 @@ export default function OrderDetailPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Products</CardTitle>
+            <Card className="shadow-md">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl">Products</CardTitle>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Product</TableHead>
-                      <TableHead>Quantity</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Total</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {order.items.map((item) => (
-                      <TableRow key={item.product.id}>
-                        <TableCell>
-                          <div className="flex items-center gap-4">
-                            <div className="relative h-16 w-16 overflow-hidden rounded">
-                              <ProductImage
-                                src={item.product.image}
-                                alt={item.product.name}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
-                            <div>
-                              <p className="font-medium">{item.product.name}</p>
-                              <p className="text-sm text-muted-foreground">
-                                {item.product.category}
-                              </p>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                        <TableCell>${item.product.price.toFixed(2)}</TableCell>
-                        <TableCell>
-                          ${(item.product.price * item.quantity).toFixed(2)}
-                        </TableCell>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="font-semibold">Product</TableHead>
+                        <TableHead className="font-semibold">Quantity</TableHead>
+                        <TableHead className="font-semibold">Price</TableHead>
+                        <TableHead className="font-semibold">Total</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                <div className="mt-4 flex justify-end border-t pt-4">
-                  <div className="text-right">
+                    </TableHeader>
+                    <TableBody>
+                      {order.items.map((item) => (
+                        <TableRow key={item.product.id} className="hover:bg-muted/30 transition-colors">
+                          <TableCell>
+                            <div className="flex items-center gap-4">
+                              <div className="relative h-16 w-16 overflow-hidden rounded-lg border-2 border-border">
+                                <ProductImage
+                                  src={item.product.image}
+                                  alt={item.product.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium">{item.product.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {item.product.category}
+                                </p>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-medium">{item.quantity}</TableCell>
+                          <TableCell>${item.product.price.toFixed(2)}</TableCell>
+                          <TableCell className="font-semibold">
+                            ${(item.product.price * item.quantity).toFixed(2)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <div className="mt-6 flex justify-end border-t pt-6">
+                  <div className="text-right space-y-1">
                     <p className="text-sm text-muted-foreground">Total</p>
-                    <p className="text-2xl font-bold">${order.total.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-primary">${order.total.toFixed(2)}</p>
                   </div>
                 </div>
               </CardContent>
@@ -169,24 +174,24 @@ export default function OrderDetailPage() {
           </div>
 
           <div className="lg:col-span-1 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Customer Information</CardTitle>
+            <Card className="shadow-md">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl">Customer Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
+              <CardContent className="space-y-5">
+                <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
                     Name
                   </p>
-                  <p className="font-semibold">{order.customerName}</p>
+                  <p className="font-semibold text-lg">{order.customerName}</p>
                 </div>
-                <div>
+                <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
                     Email
                   </p>
-                  <p>{order.customerEmail}</p>
+                  <p className="break-all">{order.customerEmail}</p>
                 </div>
-                <div>
+                <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
                     Phone
                   </p>
@@ -195,28 +200,28 @@ export default function OrderDetailPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Shipping Address</CardTitle>
+            <Card className="shadow-md">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl">Shipping Address</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p>{order.shippingAddress}</p>
-                <p>
+                <p className="font-medium">{order.shippingAddress}</p>
+                <p className="text-muted-foreground">
                   {order.shippingCity}, {order.shippingZipCode}
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Change Status</CardTitle>
+            <Card className="shadow-md border-2 border-primary/20">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl">Change Status</CardTitle>
               </CardHeader>
               <CardContent>
                 <Select
                   value={order.status}
                   onValueChange={(v) => handleStatusChange(v as Order["status"])}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>

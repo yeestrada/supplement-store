@@ -78,15 +78,19 @@ export default function CheckoutPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 container py-12">
-        <h1 className="mb-8 text-4xl font-bold">Checkout</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">Checkout</h1>
+          <p className="text-muted-foreground">Complete your order information</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Shipping Information</CardTitle>
+              <Card className="shadow-md">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-2xl">Shipping Information</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-2">Please fill in all required fields</p>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-5">
                   <div>
                     <Label htmlFor="customerName">Full Name *</Label>
                     <Input
@@ -184,9 +188,9 @@ export default function CheckoutPage() {
               </Card>
             </div>
             <div className="lg:col-span-1">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Order Summary</CardTitle>
+              <Card className="shadow-md sticky top-24">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-2xl">Order Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
